@@ -1,0 +1,9 @@
+[project]
+name = "agent_study"
+version = "0.1.0"
+description = "Minimal example Python package scaffold"
+authors = [{name = "pocky-code"}]
+requires-python = ">=3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0"
