@@ -1,0 +1,6 @@
+{
+    "dependencies": ["."],
+    "graphs":{
+        "demo":"./src/simple_graph.py:graph"
+    }
+}
