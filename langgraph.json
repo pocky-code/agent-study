@@ -1,6 +1,8 @@
 {
     "dependencies": ["."],
+    "env":"./.env",
     "graphs":{
-        "demo":"./src/simple_graph.py:graph"
+        "demo":"./src/simple_graph.py:graph",
+        "multi_agent":"./src/multi_agent_graph.py:graph"
     }
 }

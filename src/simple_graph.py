@@ -1,16 +1,19 @@
 from typing import Annotated, List, TypedDict
 
 from langchain_aws import ChatBedrock
+from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.tools import tool
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import AnyMessage, add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 
 
+# ---------- State ----------
 class State(TypedDict):
     messages: Annotated[List[AnyMessage], add_messages]
 
 
+# ---------- Tools ----------
 @tool
 def get_weather(city: str) -> str:
     """Get the current weather in a given city."""
@@ -18,8 +21,11 @@ def get_weather(city: str) -> str:
     return weather_map.get(city, "unknown")
 
 
-TOOLS = [get_weather]
+web_search = TavilySearchResults(max_results=2)
 
+TOOLS = [get_weather, web_search]
+
+# ---------- LLM ----------
 llm = ChatBedrock(
     model="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
     region="us-west-2",
