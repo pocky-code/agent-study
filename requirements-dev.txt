@@ -1,0 +1,11 @@
+# Development dependencies
+-r requirements.txt
+
+# LangGraph CLI for local development
+langgraph-cli[inmem]>=0.4.4
+
+# Linting and formatting
+ruff>=0.14.1
+
+# Type checking
+pyright>=1.1.406

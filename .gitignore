@@ -1,4 +1,45 @@
+# Python
 __pycache__/
-.venv/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Type checking
+.mypy_cache/
+.pyright/
+.dmypy.json
+dmypy.json
+pyrightconfig.json
+
+# Linting
+.ruff_cache/
+
+# Project specific
 .langgraph_api
