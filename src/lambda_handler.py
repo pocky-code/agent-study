@@ -3,7 +3,7 @@ import logging
 
 from langchain.schema import HumanMessage
 
-from simple_graph import State, graph
+from .simple_graph import State, graph
 
 # ログ設定
 logger = logging.getLogger(__name__)

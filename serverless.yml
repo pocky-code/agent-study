@@ -1,0 +1,44 @@
+service: agent-study
+
+frameworkVersion: '4'
+
+provider:
+  name: aws
+  runtime: python3.12
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-west-2'}
+  architecture: x86_64
+  logs:
+    httpApi: true
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: '*'
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    slim: true
+
+package:
+  patterns:
+    - '!**/*'
+    - 'src/**'
+    - 'requirements.txt'
+
+functions:
+  chat:
+    handler: src/lambda_handler.lambda_handler
+    memorySize: 512
+    timeout: 30
+    events:
+      - httpApi:
+          path: /chat
+          method: POST
+
+

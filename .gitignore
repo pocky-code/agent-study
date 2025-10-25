@@ -47,3 +47,9 @@ pyrightconfig.json
 .langgraph_api
 lambda_package
 lambda_package.zip
+
+# Node
+node_modules
+
+# Serverless
+.serverless

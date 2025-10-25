@@ -1,0 +1,11 @@
+{
+  "name": "agent-study-infra",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Serverless Framework plugins for agent-study",
+  "devDependencies": {
+    "serverless": "4.22.0"
+  }
+}
+
+
