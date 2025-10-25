@@ -26,8 +26,6 @@ plugins:
   - serverless-offline
 
 custom:
-  dotenv:
-    path: .env
   pythonRequirements:
     dockerizePip: true
     layer: true
