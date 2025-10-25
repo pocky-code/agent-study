@@ -6,6 +6,7 @@ from langchain_core.tools import tool
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import AnyMessage, add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
+import os
 
 
 # ---------- State ----------
@@ -29,7 +30,7 @@ TOOLS = [get_weather, web_search]
 llm = ChatBedrock(
     model="global.anthropic.claude-sonnet-4-5-20250929-v1:0",
     region="us-west-2",
-    credentials_profile_name="pk",
+    credentials_profile_name=None if os.getenv("AWS_EXECUTION_ENV") else "pk",
     model_kwargs={
         "max_tokens": 4000,
         # "thinking": {"type": "enabled", "budget_tokens": 2000},

@@ -1,6 +1,9 @@
 # Development dependencies
 -r requirements.txt
 
+# AWS SDK for Python
+boto3==1.40.50
+
 # LangGraph CLI for local development
 langgraph-cli[inmem]>=0.4.4
 

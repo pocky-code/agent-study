@@ -45,3 +45,5 @@ pyrightconfig.json
 
 # Project specific
 .langgraph_api
+lambda_package
+lambda_package.zip
