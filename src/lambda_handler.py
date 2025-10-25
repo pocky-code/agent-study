@@ -41,7 +41,10 @@ def lambda_handler(event, _context):
     response_message = messages[-1].content if messages else ""
     logger.info(f"Response message: {response_message}")
 
-    response = {"statusCode": 200, "body": json.dumps({"response": response_message})}
+    response = {
+        "statusCode": 200,
+        "body": json.dumps({"response": response_message}, ensure_ascii=False),
+    }
     logger.info(f"Returning response: {response}")
 
     return response
