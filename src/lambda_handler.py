@@ -1,7 +1,7 @@
 import json
 import logging
 
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 
 from .simple_graph import State, graph
 

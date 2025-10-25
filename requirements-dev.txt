@@ -1,5 +1,5 @@
 # Development dependencies
--r requirements.txt
+-r requirements-base.txt
 
 # AWS SDK for Python
 boto3==1.40.50

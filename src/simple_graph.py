@@ -2,8 +2,8 @@ import os
 from typing import Annotated, List, TypedDict
 
 from langchain_aws import ChatBedrock
-from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.tools import tool
+from langchain_tavily import TavilySearch
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import AnyMessage, add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -22,7 +22,7 @@ def get_weather(city: str) -> str:
     return weather_map.get(city, "unknown")
 
 
-web_search = TavilySearchResults(max_results=2)
+web_search = TavilySearch(max_results=2)
 
 TOOLS = [get_weather, web_search]
 

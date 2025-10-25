@@ -1,6 +1,6 @@
 service: agent-study
 
-frameworkVersion: '4'
+frameworkVersion: "4"
 
 provider:
   name: aws
@@ -8,8 +8,6 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-west-2'}
   architecture: x86_64
-  logs:
-    httpApi: true
   iam:
     role:
       statements:
@@ -18,27 +16,53 @@ provider:
             - logs:CreateLogGroup
             - logs:CreateLogStream
             - logs:PutLogEvents
-          Resource: '*'
+          Resource: "*"
+        - Effect: Allow
+          Action:
+            - bedrock:*
+          Resource: "*"
+
+plugins:
+  - serverless-offline
 
 custom:
+  dotenv:
+    path: .env
   pythonRequirements:
     dockerizePip: true
-    slim: true
+    layer: true
+    # useDownloadCache: false
+    # useStaticCache: false
+    pipCmdExtraArgs:
+      - --no-deps
+    noDeploy:
+      - boto3
+      - botocore
+      - jmespath
+      - s3transfer
 
 package:
   patterns:
-    - '!**/*'
-    - 'src/**'
-    - 'requirements.txt'
+    - "!**/*"
+    - "src/**"
+    - "requirements.txt"
+  exclude:
+    - __pycache__/**
+    - "*.pyc"
+    - "*.log"
+    - boto3/**
+    - botocore/**
+    - jmespath/**
+    - s3transfer/**
 
 functions:
   chat:
     handler: src/lambda_handler.lambda_handler
     memorySize: 512
-    timeout: 30
-    events:
-      - httpApi:
-          path: /chat
-          method: POST
-
-
+    timeout: 60
+    url: true
+    environment:
+      LANGSMITH_API_KEY: ${env:LANGSMITH_API_KEY}
+      TAVILY_API_KEY: ${env:TAVILY_API_KEY}
+    layers:
+      - Ref: PythonRequirementsLambdaLayer

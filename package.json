@@ -3,9 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "description": "Serverless Framework plugins for agent-study",
+  "scripts": {
+    "offline": "serverless offline --noPrependStageInUrl",
+    "offline:debug": "SLS_DEBUG=* serverless offline --noPrependStageInUrl"
+  },
   "devDependencies": {
-    "serverless": "4.22.0"
+    "serverless": "4.22.0",
+    "serverless-offline": "^14.4.0"
   }
 }
-
-
