@@ -1,29 +1,47 @@
 import json
-from simple_graph import graph, State
+import logging
+
 from langchain.schema import HumanMessage
 
-def lambda_handler(event):
+from simple_graph import State, graph
+
+# ログ設定
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+
+def lambda_handler(event, _context):
+    logger.info(f"Received event: {event}")
+
     # 入力メッセージを取得
     body = event.get("body")
-    if body:
-        body = json.loads(body) 
-    else:
-        body = event
+    logger.info(f"Raw body: {body}")
+
+    body = json.loads(body) if body else event
+    logger.info(f"Parsed body: {body}")
 
     user_message = body.get("message")
+    logger.info(f"User message: {user_message}")
+
     if not user_message:
-        return {
-            "statusCode": 400,
-            "body": json.dumps({"error": "No message provided"})
-        }
+        logger.warning("No message provided in the request.")
+        return {"statusCode": 400, "body": json.dumps({"error": "No message provided"})}
+
     # グラフを実行
     state = State(messages=[HumanMessage(content=user_message)])
+    logger.info(f"Initial state: {state}")
+
     result = graph.invoke(state)
+    logger.info(f"Graph result: {result}")
+
     # 結果メッセージを抽出
     messages = result.get("messages", [])
-    response_message = messages[-1]["content"] if messages else ""
+    logger.info(f"Result messages: {messages}")
 
-    return {
-        "statusCode": 200,
-        "body": json.dumps({"response": response_message})
-    }
+    response_message = messages[-1].content if messages else ""
+    logger.info(f"Response message: {response_message}")
+
+    response = {"statusCode": 200, "body": json.dumps({"response": response_message})}
+    logger.info(f"Returning response: {response}")
+
+    return response

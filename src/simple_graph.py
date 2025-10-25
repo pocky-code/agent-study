@@ -1,3 +1,4 @@
+import os
 from typing import Annotated, List, TypedDict
 
 from langchain_aws import ChatBedrock
@@ -6,7 +7,6 @@ from langchain_core.tools import tool
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import AnyMessage, add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
-import os
 
 
 # ---------- State ----------
