@@ -18,9 +18,7 @@ today = date.today().isoformat()
 # =========================
 class State(TypedDict):
     messages: Annotated[List[AnyMessage], add_messages]
-    route: Optional[
-        Literal["weather", "web", "chat"]
-    ]  # 分岐結果を保持（デバッグにも便利）
+    route: Optional[Literal["weather", "web", "chat"]]  # 分岐結果を保持（デバッグにも便利）
 
 
 # =========================
@@ -38,8 +36,8 @@ def get_weather(city: str) -> str:
 # Tavily
 web_search = TavilySearchResults(
     max_results=2,
-    sarch_depth=1,
-    include_answers=False,
+    search_depth="basic",
+    include_answer=False,
     include_raw_content=False,
     include_images=False,
 )
@@ -71,9 +69,7 @@ llm_chat = llm_base  # ツールなし
 # Router (構造化出力)
 # =========================
 class RouteSchema(BaseModel):
-    route: Literal["weather", "web", "chat"] = Field(
-        ..., description="weather | web | chat"
-    )
+    route: Literal["weather", "web", "chat"] = Field(..., description="weather | web | chat")
     # Claudeに都市名/検索語の抽出もさせたいなら追加:
     city: Optional[str] = None
     query: Optional[str] = None
@@ -192,14 +188,10 @@ builder.add_conditional_edges(
 builder.add_conditional_edges(
     "weather_agent", tools_condition, {"tools": "weather_tools", "__end__": END}
 )
-builder.add_conditional_edges(
-    "weather_tools", post_weather_tools, ["web_agent", "weather_agent"]
-)
+builder.add_conditional_edges("weather_tools", post_weather_tools, ["web_agent", "weather_agent"])
 
 # webライン
-builder.add_conditional_edges(
-    "web_agent", tools_condition, {"tools": "web_tools", "__end__": END}
-)
+builder.add_conditional_edges("web_agent", tools_condition, {"tools": "web_tools", "__end__": END})
 builder.add_edge("web_tools", "web_agent")  # 続けて検索 → その後の発話でENDへ
 
 # chatライン
